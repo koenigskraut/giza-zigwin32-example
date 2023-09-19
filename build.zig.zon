@@ -1,0 +1,14 @@
+.{
+    .name = "giza-zigwin32-example",
+    .version = "1.0.0",
+    .dependencies = .{
+        .win32 = .{
+            .url = "https://github.com/marlersoft/zigwin32/archive/967edfddab98255b117b4fac779e589902ad9984.tar.gz",
+            .hash = "1220e5ff7e6899b1791b43ba52969be58f8708950ba1cda7c361dc2f55963580b463",
+        },
+        .giza = .{
+            .url = "https://github.com/koenigskraut/giza/archive/495398e7d9f43f8d648820ff3921e90eafc3cbd4.tar.gz",
+            .hash = "1220d66a6e09c637862fd44f0d8099b7c0790317918c33ef1d927155d3d009be038f",
+        },
+    },
+}
