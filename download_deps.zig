@@ -1,6 +1,6 @@
 const std = @import("std");
 
-const cairo_link = "";
+const cairo_link = "https://github.com/koenigskraut/giza-zigwin32-example/releases/download/v1.0.0/cairo.tar.gz";
 
 pub fn main() !void {
     var arena = std.heap.ArenaAllocator.init(std.heap.page_allocator);
@@ -12,7 +12,8 @@ pub fn main() !void {
     };
     if (exists) return;
 
-    var cairo_dir = try std.fs.cwd().openDir("deps/", .{});
+    try std.fs.cwd().makeDir("deps");
+    var cairo_dir = try std.fs.cwd().openDir("deps", .{});
     defer cairo_dir.close();
 
     var client = std.http.Client{ .allocator = arena.allocator() };
@@ -25,8 +26,6 @@ pub fn main() !void {
     try req.wait();
 
     var file = try std.fs.cwd().createFile("cairo.tar.gz", .{ .read = true });
-    errdefer std.fs.cwd().deleteFile("cairo.tar.gz");
-    defer file.close();
 
     var fifo = std.fifo.LinearFifo(u8, .{ .Static = 4096 }).init();
     defer fifo.deinit();
@@ -37,4 +36,7 @@ pub fn main() !void {
     var decomp = try std.compress.gzip.decompress(arena.allocator(), file.reader());
 
     try std.tar.pipeToFileSystem(cairo_dir, decomp.reader(), .{ .mode_mode = .ignore });
+
+    file.close();
+    try std.fs.cwd().deleteFile("cairo.tar.gz");
 }

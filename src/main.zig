@@ -3,8 +3,6 @@ const cairo = @import("cairo");
 
 const WINAPI = @import("std").os.windows.WINAPI;
 
-const text = @embedFile("text.txt");
-
 const win32 = struct {
     usingnamespace @import("win32").zig;
     usingnamespace @import("win32").foundation;
@@ -136,5 +134,5 @@ fn onPaint(hdc: win32.HDC) !void {
     const font_extents = cr.fontExtents();
 
     cr.moveTo(BORDER_WIDTH, BORDER_WIDTH + SNIPPET_WIDTH + font_extents.ascent);
-    cr.showText(text);
+    cr.showText("This is some example text!");
 }
