@@ -1,3 +1,6 @@
+//! Code itself was adapted from https://gist.github.com/llamadonica/4345686
+//! Author: Owen Taylor <otaylor at redhat.com>, Red Hat Inc.
+
 const std = @import("std");
 const cairo = @import("cairo");
 
