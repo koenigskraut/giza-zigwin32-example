@@ -28,8 +28,8 @@ const WINDOW_STYLE: win32.WINDOW_STYLE = @enumFromInt(@intFromEnum(win32.WS_OVER
     ~(@intFromEnum(win32.WS_MAXIMIZEBOX) | @intFromEnum(win32.WS_THICKFRAME)));
 
 pub export fn main(hInstance: HINSTANCE, _: ?HINSTANCE, pCmdLine: [*:0]u16, nCmdShow: u32) callconv(WINAPI) c_int {
+    _ = nCmdShow;
     _ = pCmdLine;
-    std.debug.print("test\n", .{});
 
     const TITLE = L("Cairo test");
 
@@ -71,7 +71,9 @@ pub export fn main(hInstance: HINSTANCE, _: ?HINSTANCE, pCmdLine: [*:0]u16, nCmd
         null, // WM_CREATE lpParam
     );
 
-    _ = win32.ShowWindow(window, @enumFromInt(nCmdShow));
+    // second arg should be nCmdShow, but the default for me is
+    // .SHOWMINNOACTIVE (7) for some reason
+    _ = win32.ShowWindow(window, .SHOWDEFAULT);
     _ = win32.UpdateWindow(window);
 
     var message: win32.MSG = undefined;
